@@ -50,7 +50,41 @@ def funh(bar1, bar2=""):
 if __name__ == "__main__": 
     funh(None, bar2="")
 
+#============================================================
 
+from task_3 import decorator_3
 
+@decorator_3
+def func():
+    print("I am ready to Start")
+    result = 0
+    n =  random.randint(10,751)
+    for i in range(n):
+        result += (i**2)
 
+@decorator_3
+def funx(n=2, m=5):
+    print("I am ready to do serious stuff")
+    max_val = float('-inf')
+    n =  random.randint(10,751)
+    res = [pow(i,2) for i in range(n)]
+    for i in res:
+        if i > max_val:
+            max_val = i
 
+@decorator_3
+def funh(bar1, bar2=""):
+    """
+    This function does something useful
+    :param bar1: description
+    :param bar2: description
+    """
+    print("some\nmultiline\noutput")
+
+if __name__=='__main__':
+    func()
+    funx(4, 5)
+    funx(400, 500)
+    funh("test")
+
+    decorator_3.display_ranks()
