@@ -7,6 +7,7 @@ from tabulate import tabulate
 class decorator_3:
     ranks = {}
     count = 0
+    name = '@decorator_3'
 
     def __init__(self, func):
         self.func = func
@@ -35,13 +36,9 @@ class decorator_3:
         print(f'Args:\tpositional {var["args"]}\n\tkey=worded {var["kwargs"]}')
         print(f'Doc:\t{self.func.__doc__}')
         code = inspect.getsourcelines(self.func)
-        fl = True
+        print(f'Source:\t{self.name}')
         for n in code[0]:
-            if fl:
-                fl = False
-                print(f'Source:\t{n[:-1]}')
-            else:
-                print(f'\t{n[:-1]}')
+            print(f'\t{n[:-1]}')
         print(f'Output:\t{f_out}')
 
         # recording info for ranks. currently only the best time is recorded

@@ -15,6 +15,7 @@ import sys
 
 def decorator_2(func):
     count = 0
+    name = '@decorator_2'
 
     def wrapper(*args, **kwargs):
         time = datetime.now()
@@ -42,13 +43,10 @@ def decorator_2(func):
         print(f'Args:\tpositional {var["args"]}\n\tkey=worded {var["kwargs"]}')
         print(f'Doc:\t{func.__doc__}')
         code = inspect.getsourcelines(func)
-        fl = True
+        nonlocal name
+        print(f'Source:\t{name}')
         for n in code[0]:
-            if fl:
-                fl = False
-                print(f'Source:\t{n[:-1]}')
-            else:
-                print(f'\t{n[:-1]}')
+            print(f'\t{n[:-1]}')
         print(f'Output:\t{out}')
 
         return res
