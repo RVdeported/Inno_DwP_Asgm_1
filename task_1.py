@@ -10,11 +10,11 @@ Created on Tue Sep 13 11:11:41 2022
 from datetime import datetime
 def decorator_1(func):
     count=0
-    def wrapper(**kargs):
+    def wrapper(*args, **kargs):
         nonlocal count
         count +=1
         time = datetime.now()
-        out=func(**kargs)
+        out=func(*args, **kargs)
         time = datetime.now() - time
         print(f'{func.__name__} call {count} executed in {time.total_seconds()} sec')
         return out

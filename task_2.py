@@ -23,7 +23,7 @@ def decorator_2(func):
         out = StringIO()
         old_stdout = sys.stdout
         sys.stdout = out
-        res = func(args, kwargs)
+        res = func(*args, **kwargs)
         out = out.getvalue()
         sys.stdout = old_stdout
 

@@ -23,7 +23,7 @@ class decorator_4:
         except Exception as e:
             sys.stdout = old_stdout
             with open('./error_log_task_4.txt', 'a') as f:
-                f.writelines(f'{datetime.now()} {e}\n')
+                f.writelines(f'{datetime.now()} function {self.func.__name__} encountered error: {e}\n')
             print(f"{self.func.__name__} encountered error, see the logs")
             return None
 
@@ -75,22 +75,35 @@ class decorator_4:
         time = decorator_4.ranks.values()
         print(tabulate(zip(name, rank, time), headers=['PROGRAM', 'RANK', 'TIME ELAPSED']))
 
+
 def decorator_4_(func):
     count = 0
-    def wrapper(*args, **kargs):
+
+    def wrapper(*args, **kwargs):
         nonlocal count
         count += 1
+
+        out = StringIO()
+        old_stdout = sys.stdout
+        sys.stdout = out
+
         time = datetime.now()
 
         try:
-            out = func(*args, **kargs)
+            res = func(*args, **kwargs)
         except Exception as e:
             with open('./error_log_task_4.txt', 'a') as f:
-                f.writelines(f'{datetime.now()} {e}\n')
+                f.writelines(f'{datetime.now()} function {func.__name__} encountered error: {e}\n')
+            sys.stdout = old_stdout
             print(f"{func.__name__} encountered error, see the logs")
             return None
 
         time = datetime.now() - time
         print(f'{func.__name__} call {count} executed in {time.total_seconds()} sec')
-        return out
+
+        sys.stdout = old_stdout
+        with open('./out_task_4.txt', 'a') as f:
+            print(out.getvalue(), file=f)
+
+        return res
     return wrapper
