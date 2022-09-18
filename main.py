@@ -28,7 +28,7 @@ def derivative(funcs: list, args: list, delta: float = 0.000001) -> list:
     return list(map(lambda f, x: (f(x + delta) - f(x)) / delta, funcs, args))
 
 
-def quadratic_eq(x2, x1, x0):
+def quadratic_eq(x2: float, x1: float, x0: float) -> list:
     """
     Solves quadratic equation of type ax^2 + bx + c = 0
     :param x2: a coefficient
@@ -74,7 +74,7 @@ def pascal(n: int, display: bool = False) -> list:
     return out
 
 
-def div(x1, x2=5):
+def div(x1: float, x2: float = 5) -> float:
     return x1/x2
 
 # ================= TASK 1 ======================================
