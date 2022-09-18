@@ -7,7 +7,7 @@ from tabulate import tabulate
 
 class decorator_3:
     """
-    Decorator class which mostly records various function's properties and records a report into a file.
+    Decorator class which records various function's properties and records a report into a file.
     Decorator also keeps and can display ranks of the fastest functions passed through it.
     """
     ranks = {}
