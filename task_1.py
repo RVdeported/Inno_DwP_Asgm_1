@@ -3,7 +3,7 @@
 """
 Created on Tue Sep 13 11:11:41 2022
 
-@author: thornail
+@author: Roman Vetrin
 """
 
 
@@ -11,6 +11,9 @@ from datetime import datetime
 
 
 def decorator_1(func):
+    """
+    Prints count of function's calls and execution time
+    """
     count = 0
 
     def wrapper(*args, **kwargs):

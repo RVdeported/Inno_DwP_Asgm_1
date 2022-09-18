@@ -9,7 +9,9 @@ Please note, that @decorator is used only in first task for demonstration of my 
 In the rest examples I use func = decorator(func) to avoid coping the function each time I want to change decorator.
 """
 
-import random
+
+#================= KEY IMPORTS AND FUNCTIONS ======================================
+
 from task_1 import decorator_1
 import numpy as np
 
@@ -62,7 +64,7 @@ def pascal(n: int, display: bool = False) -> list:
     :return: a list of int containing layers of pascal triangle
     """
     out = [[1]]
-    for t in range(1, n):
+    for _ in range(1, n):
         out += [[f+i for f, i in zip([0]+out[-1], out[-1]+[0])]]
 
     if display:
@@ -72,12 +74,20 @@ def pascal(n: int, display: bool = False) -> list:
     return out
 
 
-quadratic_eq_1 = decorator_1(quadratic_eq)
-matrix_p_norm_1 = decorator_1(matrix_p_norm)
+def div(x1, x2=5):
+    return x1/x2
+
+# ================= TASK 1 ======================================
+
+from task_1 import decorator_1  # I repeated import of the first decorator for consistency with other tasks
 
 
 if __name__ == "__main__":
-    print("Testing of task_1\n")
+    # assignment of decorators
+    quadratic_eq_1 = decorator_1(quadratic_eq)
+    matrix_p_norm_1 = decorator_1(matrix_p_norm)
+
+    print("\nTesting of task_1\n")
 
     quadratic_eq_1(1, 5, 2)
     matrix_p_norm_1([[1, 1, 1],
@@ -90,26 +100,26 @@ if __name__ == "__main__":
     derivative([lambda x:x**2, lambda x:x**3 + 3*x**2], [3, 6])
     print("\nTask_1 test complete\n")
 
-#=========================================================
+# ================= TASK 2 ======================================
 
 from task_2 import decorator_2
 
-pascal_2 = decorator_2(pascal)
-
 if __name__ == "__main__":
+    pascal_2 = decorator_2(pascal)
     print("Testing of task_2\n")
     pascal_2(5, display=True)
     print("\nTask_2 test complete\n")
 
-#============================================================
+# ================= TASK 3 ======================================
 
 from task_3 import decorator_3
 
-quadratic_eq_3 = decorator_3(quadratic_eq)
-pascal_3 = decorator_3(pascal)
-matrix_p_norm_3 = decorator_3(matrix_p_norm)
-
 if __name__ == '__main__':
+    # assignment of decorators
+    quadratic_eq_3 = decorator_3(quadratic_eq)
+    pascal_3 = decorator_3(pascal)
+    matrix_p_norm_3 = decorator_3(matrix_p_norm)
+
     print("Testing of task_3\n")
 
     quadratic_eq_3(1, 5, 2)
@@ -121,30 +131,24 @@ if __name__ == '__main__':
     print("\nTask_3 test complete\n")
 
 
-#====================================================================
+# ================= TASK 4 ======================================
 
 from task_4 import decorator_4, decorator_4_
 
 
-@decorator_4
-def div(x1, x2=5):
-    return x1/x2
-
-
-@decorator_4_
-def div_(x1, x2=5):
-    return x1/x2
-
-
-pascal_4 = decorator_4(pascal)
-matrix_p_norm_4 = decorator_4(matrix_p_norm)
-
 if __name__ == '__main__':
+    # assignment of decorators
+    pascal_4 = decorator_4(pascal)
+    matrix_p_norm_4 = decorator_4(matrix_p_norm)
+    div_4 = decorator_4(div)
+    div_4_ = decorator_4_(div)
+
     print("Testing of task_4\n")
 
-    div(3, 6)
-    div(5, 0)  # class decorator
-    div_(5, 0)  # function decorator
+    pascal_4(9)
+    div_4(3, 6)
+    div_4(5, 0)  # class decorator
+    div_4_(5, 0)  # function decorator
     pascal_4(7)
     matrix_p_norm_4(np.random.random((5, 5))*10)
 

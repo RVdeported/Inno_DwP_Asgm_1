@@ -3,17 +3,19 @@
 """
 Created on Tue Sep 13 11:27:43 2022
 
-@author: thornail
+@author: Roman Vetrin
 """
 
 import inspect
 from datetime import datetime
-
 from io import StringIO
 import sys
 
 
 def decorator_2(func):
+    """
+    Prints various properties of the function including console out stream.
+    """
     count = 0
     name = '@decorator_2'
 
@@ -41,13 +43,19 @@ def decorator_2(func):
         print(f'Sign:\t{sig}')
         var = locals()
         print(f'Args:\tpositional {var["args"]}\n\tkey=worded {var["kwargs"]}')
-        print(f'Doc:\t{func.__doc__}')
+        print(f'Doc:', end="")
+        if not func.__doc__:
+            print("\tNone")
+        for n in str(func.__doc__).splitlines()[1:]:
+            print(f'\t{n}')
         code = inspect.getsourcelines(func)
         nonlocal name
         print(f'Source:\t{name}')
         for n in code[0]:
             print(f'\t{n[:-1]}')
-        print(f'Output:\t{out}')
+        print(f'Output:', end="")
+        for n in out.splitlines():
+            print(f'\t{n}')
 
         return res
     return wrapper
