@@ -40,7 +40,7 @@ def quadratic_eq(x2: float, x1: float, x0: float) -> list:
     x1, x0 = x1/(2*x2), x0/(2*x2)
     D = x1**2 - 2*x0
     if D < 0:
-        print("There is no real solutions")
+        print("There are no real solutions")
         return False
 
     return [-x1+np.sqrt(D), -x1-np.sqrt(D)]
