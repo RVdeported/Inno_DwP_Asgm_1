@@ -64,6 +64,7 @@ def pascal(n: int, display: bool = False) -> list:
     :return: a list of int containing layers of pascal triangle
     """
     out = [[1]]
+    print("Starting a Pascal triangle\nExpect triangle to appear\nnow")
     for _ in range(1, n):
         out += [[f+i for f, i in zip([0]+out[-1], out[-1]+[0])]]
 
