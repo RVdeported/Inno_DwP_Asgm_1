@@ -115,7 +115,7 @@ def decorator_4_(func):
             with open('./error_log_task_4.txt', 'a') as f:
                 f.writelines(f'{datetime.now()} function {func.__name__} encountered error: {e}\n')
             sys.stdout = old_stdout
-            print(f"{func.__name__} encountered error, see the logs")
+            print(f"Function {func.__name__} encountered error, see the logs")
             return None
 
         time = datetime.now() - time
