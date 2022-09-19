@@ -33,23 +33,23 @@ class decorator_3:
         print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds()} sec')
 
         # inspection
-        print(f'Name:\t{self.func.__name__}')
-        print(f'Type:\t{type(self.func)}')
+        print(f'Name:\t\t{self.func.__name__}')
+        print(f'Type:\t\t{type(self.func)}')
         sig = inspect.signature(self.func)
-        print(f'Sign:\t{sig}')
+        print(f'Sign:\t\t{sig}')
         var = locals()
-        print(f'Args:\tpositional {var["args"]}\n\tkey=worded {var["kwargs"]}')
+        print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
         if not self.func.__doc__:
-            print("\tNone")
+            print("\t\tNone")
         for n in str(self.func.__doc__).splitlines()[1:]:
-            print(f'\t{n}')
-        code = inspect.getsourcelines(self.func)
-        print(f'Source:\t{self.name}')
-        for n in code[0]:
-            print(f'\t{n[:-1]}')
+            print(f'\t\t{n}')
+        code = inspect.getsource(self.func)
+        print("Source:", end="")
+        for n in code.splitlines():
+            print(f'\t\t{n}')
         print(f'Output:', end="")
         for n in func_out.splitlines():
-            print(f'\t{n}')
+            print(f'\t\t{n}')
 
         # recording info for ranks. currently only the best time is recorded
         if not (self.func.__name__ in decorator_3.ranks) or \

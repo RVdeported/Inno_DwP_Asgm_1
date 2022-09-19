@@ -37,25 +37,24 @@ def decorator_2(func):
         print(f'{func.__name__} call {count} executed in {time.total_seconds()} sec')
         
         # inspection
-        print(f'Name:\t{func.__name__}')
-        print(f'Type:\t{type(func)}')
+        print(f'Name:\t\t{func.__name__}')
+        print(f'Type:\t\t{type(func)}')
         sig = inspect.signature(func)
-        print(f'Sign:\t{sig}')
+        print(f'Sign:\t\t{sig}')
         var = locals()
-        print(f'Args:\tpositional {var["args"]}\n\tkey=worded {var["kwargs"]}')
+        print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
         print(f'Doc:', end="")
         if not func.__doc__:
-            print("\tNone")
+            print("\t\tNone")
         for n in str(func.__doc__).splitlines()[1:]:
-            print(f'\t{n}')
-        code = inspect.getsourcelines(func)
-        nonlocal name
-        print(f'Source:\t{name}')
-        for n in code[0]:
-            print(f'\t{n[:-1]}')
+            print(f'\t\t{n}')
+        code = inspect.getsource(func)
+        print("Source:", end="")
+        for n in code.splitlines():
+            print(f'\t\t{n}')
         print(f'Output:', end="")
         for n in out.splitlines():
-            print(f'\t{n}')
+            print(f'\t\t{n}')
 
         return res
     return wrapper
