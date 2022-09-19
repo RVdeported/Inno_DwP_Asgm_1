@@ -9,8 +9,7 @@ Please note, that @decorator is used only in first task for demonstration of my 
 In the rest examples I use func = decorator(func) to avoid coping the function each time I want to change decorator.
 """
 
-
-#================= KEY IMPORTS AND FUNCTIONS ======================================
+# ================= KEY IMPORTS AND FUNCTIONS ======================================
 
 from task_1 import decorator_1
 import numpy as np
@@ -78,6 +77,7 @@ def pascal(n: int, display: bool = False) -> list:
 def div(x1: float, x2: float = 5) -> float:
     return x1/x2
 
+
 # ================= TASK 1 ======================================
 
 from task_1 import decorator_1  # I repeated import of the first decorator for consistency with other tasks
@@ -129,6 +129,7 @@ if __name__ == '__main__':
     matrix_p_norm_3(np.random.random((5, 5))*10)
 
     decorator_3.display_ranks()
+
     print("\nTask_3 test complete\n")
 
 

@@ -17,23 +17,22 @@ class decorator_3:
         self.func = func
 
     def __call__(self, *args, **kwargs):
-        time = datetime.now()
-
         # changing stdout stream
         out = StringIO()
         old_stdout = sys.stdout
         sys.stdout = out
+        time = datetime.now()
         res = self.func(*args, **kwargs)
+        time = datetime.now() - time
         func_out = out.getvalue()
 
         # count and time
         self.count += 1
-        time = datetime.now() - time
-        print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds()} sec')
+        print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
         var = locals()
-        self.print_properties(func_out, var)
+        self.print_properties(func_out, var, res)
 
         # recording info for ranks. currently only the best time is recorded
         if not (self.func.__name__ in decorator_3.ranks) or \
@@ -47,24 +46,33 @@ class decorator_3:
 
         return res
 
-    def print_properties(self, func_out, var):
+    def print_properties(self, func_out, var, res):
         # inspection
         print(f'Name:\t\t{self.func.__name__}')
         print(f'Type:\t\t{type(self.func)}')
+
         sig = inspect.signature(self.func)
         print(f'Sign:\t\t{sig}')
+
         print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
+
         print(f'Doc:', end="")
-        if not self.func.__doc__:
-            print("\t\tNone")
+        if not self.func.__doc__: print("\t\tNone")
         for n in str(self.func.__doc__).splitlines()[1:]:
             print(f'\t\t{n}')
+
         code = inspect.getsource(self.func)
         print("Source:", end="")
         for n in code.splitlines():
             print(f'\t\t{n}')
+
         print(f'Output:', end="")
+        if len(func_out.splitlines()) == 0: print("")
         for n in func_out.splitlines():
+            print(f'\t\t{n}')
+
+        print(f'Return:', end="")
+        for n in str(res).splitlines():
             print(f'\t\t{n}')
 
     @staticmethod
@@ -73,9 +81,10 @@ class decorator_3:
 
     @staticmethod
     def display_ranks():
-        decorator_3.ranks = {k: v for k, v in sorted(decorator_3.get_zip_ranks(), key=lambda item: item[1])}
+        decorator_3.ranks = dict(sorted(decorator_3.get_zip_ranks(), key=lambda item: item[1]))
         name = decorator_3.ranks.keys()
         rank = [i for i in range(1, len(decorator_3.ranks)+1)]
-        time = decorator_3.ranks.values()
+        time = ["{:.6f}".format(t) for t in decorator_3.ranks.values()]
+        print(time)
         print(tabulate(zip(name, rank, time), headers=['PROGRAM', 'RANK', 'TIME ELAPSED']))
 
