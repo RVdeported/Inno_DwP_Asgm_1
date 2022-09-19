@@ -4,6 +4,7 @@ from io import StringIO
 import sys
 from tabulate import tabulate
 
+
 class decorator_4:
     """
     Decorator class which records various function's properties and records a report into a file.
@@ -12,7 +13,6 @@ class decorator_4:
     """
     ranks = {}
     count = 0
-    name = '@decorator_4'
 
     def __init__(self, func):
         self.func = func
@@ -40,12 +40,26 @@ class decorator_4:
         time = datetime.now() - time
         print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds()} sec')
 
-        # inspection
+        # printing properties
+        var = locals()
+        self.print_properties(func_out, var)
+
+        # recording info for ranks. currently only the best time is recorded
+        if not (self.func.__name__ in decorator_4.ranks) or \
+                decorator_4.ranks[self.func.__name__] > time.total_seconds():
+            decorator_4.ranks.update({self.func.__name__: time.total_seconds()})
+
+        sys.stdout = old_stdout
+        with open('./out_task_4.txt', 'a') as f:
+            print(out.getvalue(), file=f)
+
+        return res
+
+    def print_properties(self, func_out, var):
         print(f'Name:\t\t{self.func.__name__}')
         print(f'Type:\t\t{type(self.func)}')
         sig = inspect.signature(self.func)
         print(f'Sign:\t\t{sig}')
-        var = locals()
         print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
         print(f'Doc:', end="")
         if not self.func.__doc__:
@@ -59,17 +73,6 @@ class decorator_4:
         print(f'Output:', end="")
         for n in func_out.splitlines():
             print(f'\t\t{n}')
-
-        # recording info for ranks. currently only the best time is recorded
-        if not (self.func.__name__ in decorator_4.ranks) or \
-                decorator_4.ranks[self.func.__name__] > time.total_seconds():
-            decorator_4.ranks.update({self.func.__name__: time.total_seconds()})
-
-        sys.stdout = old_stdout
-        with open('./out_task_4.txt', 'a') as f:
-            print(out.getvalue(), file=f)
-
-        return res
 
     @staticmethod
     def get_zip_ranks():

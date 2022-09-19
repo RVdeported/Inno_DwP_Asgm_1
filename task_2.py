@@ -17,7 +17,6 @@ def decorator_2(func):
     Prints various properties of the function including console out stream.
     """
     count = 0
-    name = '@decorator_2'
 
     def wrapper(*args, **kwargs):
         time = datetime.now()
@@ -35,13 +34,19 @@ def decorator_2(func):
         count += 1
         time = datetime.now() - time
         print(f'{func.__name__} call {count} executed in {time.total_seconds()} sec')
-        
+
+        # printing properties
+        var = locals()
+        print_properties(func, out, var)
+
+        return res
+
+    def print_properties(func, out, var):
         # inspection
         print(f'Name:\t\t{func.__name__}')
         print(f'Type:\t\t{type(func)}')
         sig = inspect.signature(func)
         print(f'Sign:\t\t{sig}')
-        var = locals()
         print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
         print(f'Doc:', end="")
         if not func.__doc__:
@@ -56,6 +61,5 @@ def decorator_2(func):
         for n in out.splitlines():
             print(f'\t\t{n}')
 
-        return res
     return wrapper
     

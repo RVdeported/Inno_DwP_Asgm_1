@@ -12,7 +12,6 @@ class decorator_3:
     """
     ranks = {}
     count = 0
-    name = '@decorator_3'
 
     def __init__(self, func):
         self.func = func
@@ -32,24 +31,9 @@ class decorator_3:
         time = datetime.now() - time
         print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds()} sec')
 
-        # inspection
-        print(f'Name:\t\t{self.func.__name__}')
-        print(f'Type:\t\t{type(self.func)}')
-        sig = inspect.signature(self.func)
-        print(f'Sign:\t\t{sig}')
+        # printing properties
         var = locals()
-        print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
-        if not self.func.__doc__:
-            print("\t\tNone")
-        for n in str(self.func.__doc__).splitlines()[1:]:
-            print(f'\t\t{n}')
-        code = inspect.getsource(self.func)
-        print("Source:", end="")
-        for n in code.splitlines():
-            print(f'\t\t{n}')
-        print(f'Output:', end="")
-        for n in func_out.splitlines():
-            print(f'\t\t{n}')
+        self.print_properties(func_out, var)
 
         # recording info for ranks. currently only the best time is recorded
         if not (self.func.__name__ in decorator_3.ranks) or \
@@ -63,6 +47,26 @@ class decorator_3:
 
         return res
 
+    def print_properties(self, func_out, var):
+        # inspection
+        print(f'Name:\t\t{self.func.__name__}')
+        print(f'Type:\t\t{type(self.func)}')
+        sig = inspect.signature(self.func)
+        print(f'Sign:\t\t{sig}')
+        print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
+        print(f'Doc:', end="")
+        if not self.func.__doc__:
+            print("\t\tNone")
+        for n in str(self.func.__doc__).splitlines()[1:]:
+            print(f'\t\t{n}')
+        code = inspect.getsource(self.func)
+        print("Source:", end="")
+        for n in code.splitlines():
+            print(f'\t\t{n}')
+        print(f'Output:', end="")
+        for n in func_out.splitlines():
+            print(f'\t\t{n}')
+
     @staticmethod
     def get_zip_ranks():
         return zip(list(decorator_3.ranks), decorator_3.ranks.values())
@@ -74,3 +78,4 @@ class decorator_3:
         rank = [i for i in range(1, len(decorator_3.ranks)+1)]
         time = decorator_3.ranks.values()
         print(tabulate(zip(name, rank, time), headers=['PROGRAM', 'RANK', 'TIME ELAPSED']))
+
