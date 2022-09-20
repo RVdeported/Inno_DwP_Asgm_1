@@ -40,8 +40,7 @@ class decorator_4:
         print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
-        var = locals()
-        self.print_properties(func_out, var, res)
+        self.print_properties(func_out, args, kwargs, res)
 
         # recording info for ranks. currently only the best time is recorded
         if not (self.func.__name__ in decorator_4.ranks) or \
@@ -54,14 +53,14 @@ class decorator_4:
 
         return res
 
-    def print_properties(self, func_out, var, res):
+    def print_properties(self, func_out, args, kwargs, res):
         print(f'Name:\t\t{self.func.__name__}')
         print(f'Type:\t\t{type(self.func)}')
 
         sig = inspect.signature(self.func)
         print(f'Sign:\t\t{sig}')
 
-        print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
+        print(f'Args:\t\tpositional {args}\n\t\tkey=worded {kwargs}')
 
         print(f'Doc:', end="")
         if not self.func.__doc__:

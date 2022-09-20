@@ -35,12 +35,11 @@ def decorator_2(func):
         print(f'{func.__name__} call {count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
-        var = locals()
-        print_properties(func, out, var, res)
+        print_properties(func, out, args, kwargs, res)
 
         return res
 
-    def print_properties(func, out, var, res):
+    def print_properties(func, out, args, kwargs, res):
         # inspection
         print(f'Name:\t\t{func.__name__}')
         print(f'Type:\t\t{type(func)}')
@@ -48,7 +47,7 @@ def decorator_2(func):
         sig = inspect.signature(func)
         print(f'Sign:\t\t{sig}')
 
-        print(f'Args:\t\tpositional {var["args"]}\n\t\tkey=worded {var["kwargs"]}')
+        print(f'Args:\t\tpositional {args}\n\t\tkey=worded {kwargs}')
 
         print(f'Doc:', end="")
         if not func.__doc__:
