@@ -1,6 +1,7 @@
 from datetime import datetime
 from io import StringIO
 import sys
+from traceback import format_exc
 
 from task_3 import display_ranks, print_properties
 
@@ -29,8 +30,8 @@ class decorator_4:
         except Exception as e:
             sys.stdout = old_stdout
             with open('./error_log_task_4.txt', 'a') as f:
-                f.writelines(f'{datetime.now()} function {self.func.__name__} encountered error: {e}\n')
-            print(f"Function {self.func.__name__} encountered error, see the logs")
+                f.writelines(f'{datetime.now()} function {self.func.__name__} encountered error {e}:\n{format_exc()}')
+            print(f"Function {self.func.__name__} encountered error {e}, see the logs for details")
             return None
 
         func_out = out.getvalue()
@@ -75,9 +76,9 @@ def decorator_4_(func):
             res = func(*args, **kwargs)
         except Exception as e:
             with open('./error_log_task_4.txt', 'a') as f:
-                f.writelines(f'{datetime.now()} function {func.__name__} encountered error: {e}\n')
+                f.writelines(f'{datetime.now()} function {func.__name__} encountered error {e}:\n{format_exc()}')
             sys.stdout = old_stdout
-            print(f"Function {func.__name__} encountered error, see the logs")
+            print(f"Function {func.__name__} encountered error {e}, see the logs for details")
             return None
 
         time = datetime.now() - time
