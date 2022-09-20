@@ -6,7 +6,8 @@ Created on Tue Sep 13 11:27:43 2022
 @author: Roman Vetrin
 """
 
-import inspect
+from task_3 import decorator_3
+
 from datetime import datetime
 from io import StringIO
 import sys
@@ -35,38 +36,9 @@ def decorator_2(func):
         print(f'{func.__name__} call {count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
-        print_properties(func, out, args, kwargs, res)
+        decorator_3.print_properties(func, out, args, kwargs, res)
 
         return res
-
-    def print_properties(func, out, args, kwargs, res):
-        # inspection
-        print(f'Name:\t\t{func.__name__}')
-        print(f'Type:\t\t{type(func)}')
-
-        sig = inspect.signature(func)
-        print(f'Sign:\t\t{sig}')
-
-        print(f'Args:\t\tpositional {args}\n\t\tkey=worded {kwargs}')
-
-        print(f'Doc:', end="")
-        if not func.__doc__:
-            print("\t\tNone")
-        for n in str(func.__doc__).splitlines()[1:]:
-            print(f'\t\t{n}')
-
-        code = inspect.getsource(func)
-        print("Source:", end="")
-        for n in code.splitlines():
-            print(f'\t\t{n}')
-
-        print(f'Output:', end="")
-        for n in out.splitlines():
-            print(f'\t\t{n}')
-
-        print(f'Return:', end="")
-        for n in str(res).splitlines():
-            print(f'\t\t{n}')
 
     return wrapper
     

@@ -31,7 +31,7 @@ class decorator_3:
         print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
-        self.print_properties(func_out, args, kwargs, res)
+        self.print_properties(self.func, func_out, args, kwargs, res)
 
         # recording info for ranks. currently only the best time is recorded
         if not (self.func.__name__ in decorator_3.ranks) or \
@@ -45,22 +45,23 @@ class decorator_3:
 
         return res
 
-    def print_properties(self, func_out, args, kwargs, res):
+    @staticmethod
+    def print_properties(func, func_out, args, kwargs, res):
         # inspection
-        print(f'Name:\t\t{self.func.__name__}')
-        print(f'Type:\t\t{type(self.func)}')
+        print(f'Name:\t\t{func.__name__}')
+        print(f'Type:\t\t{type(func)}')
 
-        sig = inspect.signature(self.func)
+        sig = inspect.signature(func)
         print(f'Sign:\t\t{sig}')
 
         print(f'Args:\t\tpositional {args}\n\t\tkey=worded {kwargs}')
 
         print(f'Doc:', end="")
-        if not self.func.__doc__: print("\t\tNone")
-        for n in str(self.func.__doc__).splitlines()[1:]:
+        if not func.__doc__: print("\t\tNone")
+        for n in str(func.__doc__).splitlines()[1:]:
             print(f'\t\t{n}')
 
-        code = inspect.getsource(self.func)
+        code = inspect.getsource(func)
         print("Source:", end="")
         for n in code.splitlines():
             print(f'\t\t{n}')

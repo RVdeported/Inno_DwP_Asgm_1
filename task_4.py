@@ -1,9 +1,9 @@
-import inspect
 from datetime import datetime
 from io import StringIO
 import sys
 from tabulate import tabulate
 
+from task_3 import decorator_3
 
 class decorator_4:
     """
@@ -40,7 +40,7 @@ class decorator_4:
         print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
-        self.print_properties(func_out, args, kwargs, res)
+        decorator_3.print_properties(self.func, func_out, args, kwargs, res)
 
         # recording info for ranks. currently only the best time is recorded
         if not (self.func.__name__ in decorator_4.ranks) or \
@@ -52,35 +52,6 @@ class decorator_4:
             print(out.getvalue(), file=f)
 
         return res
-
-    def print_properties(self, func_out, args, kwargs, res):
-        print(f'Name:\t\t{self.func.__name__}')
-        print(f'Type:\t\t{type(self.func)}')
-
-        sig = inspect.signature(self.func)
-        print(f'Sign:\t\t{sig}')
-
-        print(f'Args:\t\tpositional {args}\n\t\tkey=worded {kwargs}')
-
-        print(f'Doc:', end="")
-        if not self.func.__doc__:
-            print("\t\tNone")
-        for n in str(self.func.__doc__).splitlines()[1:]:
-            print(f'\t\t{n}')
-
-        code = inspect.getsource(self.func)
-        print("Source:", end="")
-        for n in code.splitlines():
-            print(f'\t\t{n}')
-
-        print(f'Output:', end="")
-        if len(func_out.splitlines()) == 0: print("")
-        for n in func_out.splitlines():
-            print(f'\t\t{n}')
-
-        print(f'Return:', end="")
-        for n in str(res).splitlines():
-            print(f'\t\t{n}')
 
     @staticmethod
     def get_zip_ranks():
@@ -119,6 +90,8 @@ def decorator_4_(func):
 
         time = datetime.now() - time
         print(f'{func.__name__} call {count} executed in {time.total_seconds():.6f} sec')
+
+        decorator_3.print_properties(func, out, args, kwargs, res)
 
         sys.stdout = old_stdout
         with open('./out_task_4.txt', 'a') as f:
