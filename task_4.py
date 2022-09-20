@@ -1,9 +1,9 @@
 from datetime import datetime
 from io import StringIO
 import sys
-from tabulate import tabulate
 
-from task_3 import decorator_3
+from task_3 import display_ranks, print_properties
+
 
 class decorator_4:
     """
@@ -40,7 +40,7 @@ class decorator_4:
         print(f'{self.func.__name__} call {self.count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
-        decorator_3.print_properties(self.func, func_out, args, kwargs, res)
+        print_properties(self.func, func_out, args, kwargs, res)
 
         # recording info for ranks. currently only the best time is recorded
         if not (self.func.__name__ in decorator_4.ranks) or \
@@ -54,16 +54,8 @@ class decorator_4:
         return res
 
     @staticmethod
-    def get_zip_ranks():
-        return zip(list(decorator_4.ranks), decorator_4.ranks.values())
-
-    @staticmethod
     def display_ranks():
-        decorator_4.ranks = {k: v for k, v in sorted(decorator_4.get_zip_ranks(), key=lambda item: item[1])}
-        name = decorator_4.ranks.keys()
-        rank = [i for i in range(1,len(decorator_4.ranks)+1)]
-        time = decorator_4.ranks.values()
-        print(tabulate(zip(name, rank, time), headers=['PROGRAM', 'RANK', 'TIME ELAPSED']))
+        display_ranks(decorator_4)
 
 
 def decorator_4_(func):

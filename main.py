@@ -154,4 +154,6 @@ if __name__ == '__main__':
     pascal_4(7)
     matrix_p_norm_4(np.random.random((5, 5))*10)
 
+    decorator_4.display_ranks()
+
     print("\nTask_4 test complete\n")

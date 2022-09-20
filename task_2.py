@@ -6,7 +6,7 @@ Created on Tue Sep 13 11:27:43 2022
 @author: Roman Vetrin
 """
 
-from task_3 import decorator_3
+from task_3 import print_properties
 
 from datetime import datetime
 from io import StringIO
@@ -36,7 +36,7 @@ def decorator_2(func):
         print(f'{func.__name__} call {count} executed in {time.total_seconds():.6f} sec')
 
         # printing properties
-        decorator_3.print_properties(func, out, args, kwargs, res)
+        print_properties(func, out, args, kwargs, res)
 
         return res
 
